@@ -40,6 +40,7 @@ public class CompanyController {
     @DeleteMapping ("/{name}")
     public ResponseEntity<?> delete(@PathVariable String name) throws NoSuchObjectException {
         log.info("DELETE company: {}", name);
+        companyService.delete(name);
         return ResponseEntity.noContent().build();
     }
 }
