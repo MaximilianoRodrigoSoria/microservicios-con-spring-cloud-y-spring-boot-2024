@@ -1,4 +1,4 @@
-package ar.com.laboratory.companiescrud.entities;
+package ar.com.laboratory.companiescrud.models.enums;
 
 public enum Category {
     SOCIAL_NETWORK,

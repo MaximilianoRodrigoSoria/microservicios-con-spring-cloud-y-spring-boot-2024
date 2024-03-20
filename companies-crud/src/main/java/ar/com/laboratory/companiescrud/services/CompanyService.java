@@ -1,12 +1,15 @@
 package ar.com.laboratory.companiescrud.services;
 
-import ar.com.laboratory.companiescrud.entities.Company;
+import ar.com.laboratory.companiescrud.models.dtos.CompanyDTO;
+import ar.com.laboratory.companiescrud.models.entities.Company;
 
 import java.rmi.NoSuchObjectException;
+import java.util.List;
 
 public interface CompanyService {
-    Company readByName(String name) throws NoSuchObjectException;
-    Company created(Company company);
-    Company update(Company company, String name) throws NoSuchObjectException;
+    CompanyDTO readByName(String name) throws NoSuchObjectException;
+    List<CompanyDTO> getAll() throws NoSuchObjectException;
+    CompanyDTO created(CompanyDTO company);
+    CompanyDTO update(CompanyDTO company, String name) throws NoSuchObjectException;
     void delete(String name) throws NoSuchObjectException;
 }

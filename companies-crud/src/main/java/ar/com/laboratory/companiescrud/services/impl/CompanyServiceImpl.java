@@ -1,7 +1,9 @@
 package ar.com.laboratory.companiescrud.services.impl;
 
-import ar.com.laboratory.companiescrud.entities.Category;
-import ar.com.laboratory.companiescrud.entities.Company;
+import ar.com.laboratory.companiescrud.models.dtos.CompanyDTO;
+import ar.com.laboratory.companiescrud.models.enums.Category;
+import ar.com.laboratory.companiescrud.models.entities.Company;
+import ar.com.laboratory.companiescrud.models.mappers.CompanyMapper;
 import ar.com.laboratory.companiescrud.repositories.CompanyRepository;
 import ar.com.laboratory.companiescrud.services.CompanyService;
 import ar.com.laboratory.companiescrud.util.exceptions.RecordNotFoundException;
@@ -11,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
+import java.rmi.NoSuchObjectException;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -21,29 +25,37 @@ import java.util.Objects;
 public class CompanyServiceImpl implements CompanyService {
 
     private CompanyRepository companyRepository;
+    private CompanyMapper companyMapper;
 
     @Override
-    public Company readByName(String name) throws RecordNotFoundException {
-        return companyRepository.findByName(name).orElseThrow(()-> new RecordNotFoundException("Company"));
+    public CompanyDTO readByName(String name) throws RecordNotFoundException {
+        var company = companyRepository.findByName(name).orElseThrow(()-> new RecordNotFoundException("Company"));
+        return companyMapper.toDto(company);
     }
 
     @Override
-    public Company created(Company company) {
+    public List<CompanyDTO> getAll() throws NoSuchObjectException {
+        return  companyMapper.toDtoList(companyRepository.findAll());
+    }
+
+    @Override
+    public CompanyDTO created(CompanyDTO company) {
         company.getWebsites().forEach(website -> {
             if (Objects.isNull(website)) {
                 website.setCategory(Category.NONE);
             }
         });
-        return companyRepository.save(company);
+        var companyToSave = companyMapper.toEntity(company);
+        return companyMapper.toDto(companyRepository.save(companyToSave));
     }
 
     @Override
-    public Company update(Company company, String name) throws RecordNotFoundException {
+    public CompanyDTO update(CompanyDTO company, String name) throws RecordNotFoundException {
         var companyUpdate = companyRepository.findByName(name).orElseThrow(()-> new RecordNotFoundException("Company"));
         companyUpdate.setLogo(company.getLogo());
         companyUpdate.setFoundationDate(company.getFoundationDate());
         companyUpdate.setFounder(company.getFounder());
-        return companyRepository.save(companyUpdate);
+        return companyMapper.toDto(companyRepository.save(companyUpdate));
     }
 
     @Override

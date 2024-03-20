@@ -1,5 +1,6 @@
-package ar.com.laboratory.companiescrud.entities;
+package ar.com.laboratory.companiescrud.models.entities;
 
+import ar.com.laboratory.companiescrud.models.enums.Category;
 import jakarta.persistence.*;
 import lombok.Data;
 

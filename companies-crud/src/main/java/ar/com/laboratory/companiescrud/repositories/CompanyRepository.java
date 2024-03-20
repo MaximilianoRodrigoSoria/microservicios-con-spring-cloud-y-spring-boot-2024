@@ -1,6 +1,6 @@
 package ar.com.laboratory.companiescrud.repositories;
 
-import ar.com.laboratory.companiescrud.entities.Company;
+import ar.com.laboratory.companiescrud.models.entities.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
