@@ -2,7 +2,6 @@ package ar.com.laboratory.companiescrud.controller;
 
 import ar.com.laboratory.companiescrud.entities.Company;
 import ar.com.laboratory.companiescrud.services.CompanyService;
-import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
