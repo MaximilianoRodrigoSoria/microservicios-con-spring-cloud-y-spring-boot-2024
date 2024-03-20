@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Data
+@Table(name = "web_site")
 public class Website implements Serializable {
 
     @Id
