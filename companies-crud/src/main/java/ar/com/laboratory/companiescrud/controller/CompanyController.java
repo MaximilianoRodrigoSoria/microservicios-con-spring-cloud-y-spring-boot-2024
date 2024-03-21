@@ -1,53 +1,71 @@
 package ar.com.laboratory.companiescrud.controller;
 
 import ar.com.laboratory.companiescrud.models.dtos.CompanyDTO;
-import ar.com.laboratory.companiescrud.models.entities.Company;
-import ar.com.laboratory.companiescrud.services.CompanyService;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.rmi.NoSuchObjectException;
 import java.util.List;
 
-@RestController
-@AllArgsConstructor
-@RequestMapping(path="/api/v1/company")
-@Slf4j
-public class CompanyController {
+@Tag(name="Company controller", description = "This is a controller to manage companies", externalDocs = @ExternalDocumentation(description = "Find more info about Companies", url = "https://example.com/companies-crud/"))
+public interface CompanyController {
 
-    private CompanyService companyService;
 
-    @GetMapping("/{name}")
-    public ResponseEntity<CompanyDTO> get(@PathVariable String name) throws NoSuchObjectException {
-        log.info("GET company: {}", name);
-        return ResponseEntity.ok(companyService.readByName(name));
-    }
+    @Operation(summary = "Obtain detailed information about a specific company by name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "Company not found")
+    })
+    public ResponseEntity<CompanyDTO>get(@Parameter(description = "Company's identifier", example = "Facebook",required = true)String name) throws NoSuchObjectException;
 
-    @GetMapping
-    public ResponseEntity<List<CompanyDTO>> getAll() throws NoSuchObjectException {
-        log.info("GET All");
-        return ResponseEntity.ok(companyService.getAll());
-    }
+    @Operation(summary = "Provide a list of all companies")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = CompanyDTO.class)))
+            )
+    })
+    public ResponseEntity<List<CompanyDTO>> getAll() throws NoSuchObjectException;
 
-    @PostMapping
-    public ResponseEntity<CompanyDTO> post(@RequestBody CompanyDTO company){
-        log.info("POST company: {}", company.getName());
-        return ResponseEntity.created(URI.create(companyService.created(company).getName())).build();
-    }
+    @Operation(summary = "Register a new company to make it available to manage")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created"),
+            @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
+    public ResponseEntity<CompanyDTO> post(
+            @RequestBody(description = "Company object that needs to be registered",
+                         required = true,
+                         content = @Content(
+                         mediaType = "application/json",
+                         schema = @Schema(implementation = CompanyDTO.class))) CompanyDTO company);
 
-    @PutMapping ("/{name}")
-    public ResponseEntity<CompanyDTO> put(@RequestBody CompanyDTO company,@PathVariable String name) throws NoSuchObjectException {
-        log.info("PUT company: {}", name);
-        return ResponseEntity.ok(companyService.update(company, name));
-    }
 
-    @DeleteMapping ("/{name}")
-    public ResponseEntity<?> delete(@PathVariable String name) throws NoSuchObjectException {
-        log.info("DELETE company: {}", name);
-        companyService.delete(name);
-        return ResponseEntity.noContent().build();
-    }
+    @Operation(summary = "Replace whole company's information or create a new one if not found")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "201", description = "Created"),
+            @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
+    public ResponseEntity<CompanyDTO> put(@RequestBody(description = "Company object that needs to be registered",
+            required = true,
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = CompanyDTO.class)))CompanyDTO company,
+                                         @Parameter(description = "Company's identifier", example = "Facebook",required = true) String name) throws NoSuchObjectException;
+
+    @Operation(summary = "Disable a specific company")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "Company not found")
+    })
+    public ResponseEntity<?> delete(@Parameter(description = "Company's identifier", example = "Facebook",required = true)String name) throws NoSuchObjectException;
 }

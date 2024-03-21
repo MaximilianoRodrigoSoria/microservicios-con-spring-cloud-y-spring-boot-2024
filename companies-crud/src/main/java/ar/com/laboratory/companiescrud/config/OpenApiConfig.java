@@ -7,7 +7,6 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityScheme;
-import io.swagger.v3.oas.models.servers.Server;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
 public class OpenApiConfig
 {    @Bean
 public OpenAPI customOpenAPI(
-        @Value("${open.api.context.path}") String contextPath,
         @Value("${open.api.info.build.version}") String version,
         @Value("${open.api.contact.info.name}") String contactName,
         @Value("${open.api.contact.info.email}") String contactEmail,
@@ -41,7 +39,6 @@ public OpenAPI customOpenAPI(
                     .contact(new Contact().name(contactName).email(contactEmail).url(contactUrl))
                     .version(version)
                     .license(new License().name(license).url(licenseUrl)))
-            .addServersItem(new Server().url(hostUrl.concat(contextPath)).description(hostDescription))
             .externalDocs(new ExternalDocumentation()
                     .description(externalDocDescription)
                     .url(externalDoc));
