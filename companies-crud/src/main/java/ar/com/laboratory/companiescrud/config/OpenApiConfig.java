@@ -23,12 +23,12 @@ public OpenAPI customOpenAPI(
         @Value("${open.api.contact.info.email}") String contactEmail,
         @Value("${open.api.contact.info.url}") String contactUrl,
         @Value("${open.api.contact.info.title}") String title,
-        @Value("${open.api.licence}") String license,
+        @Value("${open.api.licence.name}") String license,
         @Value("${open.api.licence.url}") String licenseUrl,
         @Value("${open.api.contact.info.description}") String description,
         @Value("${open.api.server.url}") String hostUrl,
         @Value("${open.api.server.description}")String hostDescription,
-        @Value("${open.api.external.doc}")String externalDoc,
+        @Value("${open.api.external.doc.url}")String externalDoc,
         @Value("${open.api.external.doc.description}") String externalDocDescription
 ) {
     return new OpenAPI()

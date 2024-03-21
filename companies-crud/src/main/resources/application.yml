@@ -1,0 +1,64 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+open:
+  api:
+    server:
+      url: http://localhost:${server.port}
+      description: Local
+    contact:
+      info:
+        url: www.test.com
+        name: Maximiliano R Soria
+        title: Companies API
+        email: MaximilianoRSoria@gmail.com
+        description: It is Company API
+    context:
+      path: ${server.servlet.context-path}
+    licence:
+      name: Apache 2.0
+      url: https://springdoc.org
+    external:
+      doc:
+        url: www.docs.com
+        description: Find more
+    info:
+      build:
+        version: 1.0.0
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: '5'
+      connection:
+        timeout: '20000'
+    password: udemy1234
+    username: laboratory
+    url: jdbc:postgresql://localhost:5432/companies
+  application:
+    name: companies-crud
+springdoc:
+  api-docs:
+    path: /api-docs
+server:
+  port: '8081'
+  servlet:
+    context-path: /companies-crud
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+        SQL: DEBUG
+
+eureka:
+  instance:
+    instance-id: '${spring.application.name}:${random.value}'
+  client:
+    server-url:
+      defaultZone: h
