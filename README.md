@@ -18,7 +18,11 @@
 ## 🚀 Introduction
 
 
+## Diagrama de arquitectua
 
+<p align="center">
+<a href="#" target="_blank" rel="noopener noreferrer">
+<img width="100%" height="100%" src="docs/img/arquitectura.png" alt="Arquitectura"></a></p>
 
 ---
 <br/>
