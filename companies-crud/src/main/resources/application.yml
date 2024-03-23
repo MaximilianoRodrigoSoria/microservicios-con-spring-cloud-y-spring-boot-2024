@@ -1,3 +1,19 @@
+spring:
+  profiles:
+    active: default
+  application:
+    name: companies-crud
+  config:
+    import: "optional:configserver:http://localhost:7777"
+  datasource:
+    driver-class-name: ${spring.datasource.driver-class-name}
+    hikari:
+      maximum-pool-size: ${spring.datasource.hikari.maximum-pool-size}
+      connection:
+        timeout: ${spring.datasource.hikari.connection.timeout}
+    password: ${spring.datasource.password}
+    username: ${spring.datasource.username}
+    url: ${spring.datasource.url}
 management:
   endpoints:
     web:
@@ -27,16 +43,7 @@ open:
     info:
       build:
         version: 1.0.0
-spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: '5'
-      connection:
-        timeout: '20000'
-    password: udemy1234
-    username: laboratory
-    url: jdbc:postgresql://localhost:5432/companies
+
   application:
     name: companies-crud
 springdoc:
@@ -61,4 +68,4 @@ eureka:
     instance-id: '${spring.application.name}:${random.value}'
   client:
     server-url:
-      defaultZone: h
+      defaultZone: http://localhost:8761/eureka/
