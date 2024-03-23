@@ -8,6 +8,8 @@ spring:
       server:
         git:
           uri: https://github.com/MaximilianoRodrigoSoria/microservices-configs.git
+          username: MaximilianoRodrigoSoria
+          password:
           default-label: master
           clone-on-start: true
 server:
