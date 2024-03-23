@@ -18,7 +18,7 @@
 ## 🚀 Introduction
 
 
-## Diagrama de arquitectua
+## Diagrama de arquitectura
 
 <p align="center">
 <a href="#" target="_blank" rel="noopener noreferrer">
