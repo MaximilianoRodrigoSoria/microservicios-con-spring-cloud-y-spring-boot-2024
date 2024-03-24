@@ -21,7 +21,7 @@ open:
         name: Maximiliano R Soria
         title: Companies API
         email: MaximilianoRSoria@gmail.com
-        description: It is Company API
+        description: It is Report API
     context:
       path: ${server.servlet.context-path}
     licence:
@@ -36,7 +36,7 @@ open:
         version: 1.0.0
 
   application:
-    name: companies-crud
+    name: report-ms
 springdoc:
   api-docs:
     path: /api-docs

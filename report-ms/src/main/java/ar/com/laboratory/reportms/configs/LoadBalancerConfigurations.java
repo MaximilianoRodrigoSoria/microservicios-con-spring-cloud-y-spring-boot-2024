@@ -16,7 +16,6 @@ public ServiceInstanceListSupplier serviceInstanceListSupplier(ConfigurableAppli
     return  ServiceInstanceListSupplier
             .builder()
             .withBlockingDiscoveryClient()
-            .withSameInstancePreference()
             .build(context);
 }
 }
