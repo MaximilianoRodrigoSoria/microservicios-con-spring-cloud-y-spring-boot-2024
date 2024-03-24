@@ -1,0 +1,53 @@
+spring:
+  profiles:
+    active: default
+  application:
+    name: report-ms
+  config:
+    import: "optional:configserver:http://localhost:7777"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+open:
+  api:
+    server:
+      url: http://localhost:${server.port}
+      description: Local
+    contact:
+      info:
+        url: www.test.com
+        name: Maximiliano R Soria
+        title: Companies API
+        email: MaximilianoRSoria@gmail.com
+        description: It is Company API
+    context:
+      path: ${server.servlet.context-path}
+    licence:
+      name: Apache 2.0
+      url: https://springdoc.org
+    external:
+      doc:
+        url: www.docs.com
+        description: Find more
+    info:
+      build:
+        version: 1.0.0
+
+  application:
+    name: companies-crud
+springdoc:
+  api-docs:
+    path: /api-docs
+server:
+  port: '7070'
+  servlet:
+    context-path: /report-ms
+
+eureka:
+  instance:
+    instance-id: '${spring.application.name}:${random.value}'
+  client:
+    server-url:
+      defaultZone: http://localhost:8761/eureka/
